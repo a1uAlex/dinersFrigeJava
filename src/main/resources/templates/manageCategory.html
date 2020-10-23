@@ -10,7 +10,8 @@
                     const url = '/category?id='+ String(id);
                     Http.open("DELETE", url);
                     Http.send();
-                    window.open("/manageCategory");
+                    window.open("/manageCategory", "_self");
+
                 }
             }
         </script>
