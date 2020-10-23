@@ -1,7 +1,9 @@
 package de.alex.dinersFrige.models;
 
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.net.URL;
+import java.util.Set;
 
 public class Kategorie {
 
@@ -11,4 +13,7 @@ public class Kategorie {
     String name;
 
     String bild;
+
+    @OneToMany (mappedBy = "artikel")
+    Set<Artikel> artikelSet;
 }
