@@ -22,6 +22,4 @@ public class Kategorie {
 
     String bild;
 
-    @OneToMany
-    Set<Artikel> artikelSet;
 }
