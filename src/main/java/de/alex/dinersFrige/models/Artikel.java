@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-
 public class Artikel {
 
     @Id
@@ -20,7 +19,7 @@ public class Artikel {
 
     String name;
 
-    @ManyToOne (mappedBy = "kategorie")
+    @ManyToOne
     Kategorie kategorie;
 
     String bild;
