@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,6 +16,10 @@ public class Inhalt {
 
     @Id
     Long id;
+
+    //Kategorie kategorie
+
+    Date mhd;
 
 
 }
