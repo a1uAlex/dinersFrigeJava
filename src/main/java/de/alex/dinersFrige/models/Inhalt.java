@@ -14,6 +14,7 @@ import java.util.Date;
 public class Inhalt {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     Long id;
 
     @ManyToOne

@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.net.URL;
 import java.sql.Array;
 import java.util.List;
@@ -20,6 +17,7 @@ import java.util.Set;
 public class Rezept {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     Long id;
 
     Boolean istFavorit;

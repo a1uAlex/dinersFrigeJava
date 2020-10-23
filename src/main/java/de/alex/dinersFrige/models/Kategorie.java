@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.net.URL;
 import java.util.Set;
 
@@ -17,6 +15,7 @@ import java.util.Set;
 public class Kategorie {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     Long id;
 
     String name;
