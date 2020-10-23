@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -17,7 +16,8 @@ public class Inhalt {
     @Id
     Long id;
 
-    //Kategorie kategorie
+    @ManyToOne
+    Artikel artikel;
 
     Date mhd;
 
