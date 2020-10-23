@@ -28,4 +28,6 @@ public class Artikel {
 
     Integer menge;
 
+    Boolean istShortcut;
+
 }
