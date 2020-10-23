@@ -26,8 +26,6 @@ public class Artikel {
 
     String einheit;
 
-    Integer menge;
-
     Boolean isShortcut;
 
 }
