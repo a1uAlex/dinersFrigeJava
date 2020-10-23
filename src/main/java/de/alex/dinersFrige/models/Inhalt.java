@@ -21,5 +21,7 @@ public class Inhalt {
 
     Date mhd;
 
+    Double menge;
+
 
 }

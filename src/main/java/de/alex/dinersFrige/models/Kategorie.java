@@ -23,6 +23,6 @@ public class Kategorie {
 
     String bild;
 
-    @OneToMany (mappedBy = "artikel")
+    @OneToMany
     Set<Artikel> artikelSet;
 }
