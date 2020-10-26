@@ -8,6 +8,7 @@ import de.alex.dinersFrige.repository.InhaltDAO;
 import de.alex.dinersFrige.repository.KategorieDAO;
 import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,47 +27,51 @@ public class MainController {
     @Autowired
     ArtikelDAO artikelDAO;
 
-    @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
+    @GetMapping("/")
     public String mainPage(Model model){
         model.addAttribute("message", "Dies ist ein Test!");
         return "main";
     }
 
-    @RequestMapping(value = "/content", method = RequestMethod.GET)
+    @GetMapping("content")
     public String content(Model model){
         List<Inhalt> inhaltList= inhaltDAO.findAll();
         model.addAttribute(inhaltList);
         return "content";
     }
 
-    @RequestMapping(value = "/manageCategory", method = RequestMethod.GET)
+    @GetMapping("manageCategory")
     public String manageCategory(Model model){
         List<Kategorie> kategorieList = kategorieDAO.findAll();
         model.addAttribute(kategorieList);
         return "manageCategory";
     }
 
-    @RequestMapping(value = "/category", method = RequestMethod.DELETE)
-    public String deleteCategory(Model model, @RequestParam Long id){
-        kategorieDAO.deleteById(id);
-        List<Kategorie> kategorieList = kategorieDAO.findAll();
-        model.addAttribute(kategorieList);
-        return "manageCategory";
+    @DeleteMapping("category/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCategory(@PathVariable (value = "id") String id){
+        try{
+            Long longId = Long.valueOf(id);
+            kategorieDAO.deleteById(longId);
+            kategorieDAO.flush();
+        } catch (NumberFormatException e){
+        }
+        return;
     }
 
-    @RequestMapping(value = "/category", method = RequestMethod.POST)
-    public String addCategory(Model model, @ModelAttribute Kategorie kategorie){
+    @PostMapping("category")
+    public String addCategory(@ModelAttribute Kategorie kategorie){
         kategorieDAO.saveAndFlush(kategorie);
-        return manageCategory(model);
+        return "redirect:/manageCategory";
     }
 
-    @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
+    @GetMapping("addCategory")
     public String addCategoryPage(Model model){
         model.addAttribute("kategorie", new Kategorie());
         return "addCategory";
     }
 
-    @RequestMapping(value = "/article", method = RequestMethod.DELETE)
+    @DeleteMapping("/article")
     public String deleteArticle(Model model, @RequestParam Long id){
         artikelDAO.deleteById(id);
         //TODO HIER die richtige Seite einfügen!

@@ -54,7 +54,7 @@
 
     <form action="/category" method="post" th:object="${kategorie}">
         <div>
-            <input name="name" placeholder="Name" th:field="*{name}">
+            <input autofocus name="name" placeholder="Name" th:field="*{name}">
             <input name="bild" placeholder="URL zum Bild" th:field="*{bild}">
             <button type="submit" class="btn btn-info">Hinzufügen</button>
         </div>
