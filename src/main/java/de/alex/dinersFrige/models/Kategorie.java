@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.net.URL;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,5 +22,8 @@ public class Kategorie {
     String name;
 
     String bild;
+
+    @OneToMany(mappedBy = "kategorie")
+    List<Artikel> artikel;
 
 }

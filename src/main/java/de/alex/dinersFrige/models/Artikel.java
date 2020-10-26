@@ -19,6 +19,7 @@ public class Artikel {
     String name;
 
     @ManyToOne
+    @JoinColumn(name="kategorie_fk")
     Kategorie kategorie;
 
     String bild;

@@ -1,6 +1,7 @@
 package de.alex.dinersFrige.controller;
 
 import de.alex.dinersFrige.DTO.ArtikelDTO;
+import de.alex.dinersFrige.DTO.InhaltDTO;
 import de.alex.dinersFrige.converter.ArtikelConverter;
 import de.alex.dinersFrige.models.Artikel;
 import de.alex.dinersFrige.models.Inhalt;
@@ -108,6 +109,17 @@ public class MainController {
         model.addAttribute("artikelDTO", new ArtikelDTO());
         model.addAttribute("kategorieListe", kategorieDAO.findAll());
         return "addArticle";
+    }
+
+    @GetMapping("addInhalt")
+    public String addInhaltPage(Model model){
+
+        model.addAttribute("inhaltDTO", new InhaltDTO());
+        model.addAttribute("kategorieListe", kategorieDAO.findAll());
+        model.addAttribute("favoriten", artikelDAO.findAllByIsShortcutTrue());
+        List<Kategorie> kategorieList = kategorieDAO.findAll();
+        System.err.println(kategorieList.get(0).getArtikel().size());
+        return "addInhalt";
     }
 
 
