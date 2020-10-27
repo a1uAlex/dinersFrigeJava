@@ -48,13 +48,18 @@
             margin-right: 30px;
             margin-top: 30px;
             margin-bottum: 30px;
+
         }
     </style>
 </head>
 <body>
 
     <script>
-        function itemClick(art, kat) {
+        function itemClick(id) {
+            div = document.getElementById(id);
+            kategorie = div.getAttribute('data-kat');
+            artikel = div.getAttribute('data-art');
+
 
         }
 
@@ -70,6 +75,16 @@
                 items[i].style.removeProperty('display');
             }
         }
+        function favClick() {
+            items = document.querySelectorAll(".item");
+            for(var j = 0; j<items.length; j++){
+                items[j].style.display = 'none';
+            }
+            favoriten = document.querySelectorAll(".item.favorit");
+            for(var j = 0; j<favoriten.length; j++){
+                favoriten[j].style.removeProperty('display');
+            }
+        }
     </script>
     <h1>Diner's Fridge</h1>
     <h2>Inhalt hinzufügen</h2>
@@ -77,13 +92,11 @@
     <h3 id="kategorien">Kategorien</h3>
     <div class="itemBox">
         <div th:id="${kategorie.id}" th:each="kategorie: ${kategorieListe}" class="item kategorie" th:text="${kategorie.name}" onclick="katClick(this.id)"></div>
-        <div class="item">Favoriten</div>
+        <div class="item" onclick="favClick()">Favoriten</div>
         <th:block th:each="kategorie: ${kategorieListe}">
-            <div class="item"  style="display: none" th:data-art="${artikel.id}" th:data-kat="${kategorie.id}" th:each="artikel: ${kategorie.artikel}" th:text="${artikel.name}" onclick="itemClick(this.data-art, this.data-kat)">
-                Ich bin ein Item!
-            </div>
-
+            <div class="item"  style="display: none" th:id="${artikel.id}" th:data-art="${artikel.id}" th:data-kat="${kategorie.id}" th:each="artikel: ${kategorie.artikel}" th:text="${artikel.name}" onclick="itemClick(this.id)"></div>
         </th:block>
+        <div class="item favorit" th:each="artikel: ${favoriten}" th:id="${artikel.id + 'F'}" th:data-art="${artikel.id}" th:data-kat="${artikel.kategorie.id}" onclick="itemClick(this.id)" style="display: none" th:text="${artikel.name}"></div>
     </div>
 
 </body>

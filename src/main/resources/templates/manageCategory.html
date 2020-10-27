@@ -6,14 +6,20 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             function deleteCategory(id) {
-                if(confirm("Wirklich löschen?")){
-                    $.ajax({
-                        url: '/category/'+id,
-                        type: 'DELETE',
-                        success: function(result) {
-                            location.reload();
-                        }
-                    });
+                anzahlArtikel = document.getElementById(id).getAttribute('data-anzahl');
+                console.log(anzahlArtikel);
+                if(anzahlArtikel>0){
+                    alert("Kategorie kann nicht gelöscht werden, da Artikel vorhanden sind!");
+                } else {
+                    if(confirm("Wirklich löschen?")){
+                        $.ajax({
+                            url: '/category/'+id,
+                            type: 'DELETE',
+                            success: function(result) {
+                                location.reload();
+                            }
+                        });
+                    }
                 }
             }
         </script>
@@ -78,7 +84,7 @@
             <tr th:attr="class=${kategorie.id}" th:each="kategorie: ${kategorieList}">
                 <td th:text="${kategorie.name}"></td>
                 <td>
-                    <button th:attr="id=${kategorie.id}" class="btn btn-danger" onclick="deleteCategory(this.id)">Entfernen</button>
+                    <button th:attr="id=${kategorie.id}" th:data-anzahl="${kategorie.artikel.size()}" class="btn btn-danger" onclick="deleteCategory(this.id)">Entfernen</button>
                 </td>
             </tr>
         </tbody>
