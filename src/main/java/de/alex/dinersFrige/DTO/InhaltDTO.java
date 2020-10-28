@@ -17,5 +17,5 @@ public class InhaltDTO {
 
     Date mhd;
 
-    Double menge;
+    Double menge;  //TODO gegebenenfalls zu Integer ändern
 }
