@@ -126,6 +126,7 @@ public class MainController {
         return "addInhalt";
     }
 
+//TODO Error Page
     @PostMapping("inhalt")
     public String addInhalt(@ModelAttribute InhaltDTO inhaltDTO){
         inhaltDAO.saveAndFlush(inhaltConverter.toInhalt(inhaltDTO));
