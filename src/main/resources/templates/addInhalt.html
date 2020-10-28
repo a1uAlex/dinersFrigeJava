@@ -41,14 +41,25 @@
         }
         .item {
             width: 200px;
-            height: 200px;
-            background: #e0964c;
+            height: auto;
             color: black;
             margin-left: 30px;
             margin-right: 30px;
             margin-top: 30px;
             margin-bottum: 30px;
 
+        }
+        .crop {
+            width: 198px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .crop img {
+            width: 400px;
+            height: 300px;
+            margin: -75px 0 0 -100px;
         }
     </style>
 </head>
@@ -91,12 +102,40 @@
 
     <h3 id="kategorien">Kategorien</h3>
     <div class="itemBox">
-        <div th:id="${kategorie.id}" th:each="kategorie: ${kategorieListe}" class="item kategorie" th:text="${kategorie.name}" onclick="katClick(this.id)"></div>
-        <div class="item" onclick="favClick()">Favoriten</div>
+        <div th:id="${kategorie.id}" th:each="kategorie: ${kategorieListe}" class="item kategorie card" onclick="katClick(this.id)">
+            <div class="crop">
+                <img class="card-img-top" src="https://via.placeholder.com/640x480" alt="Card image cap">
+            </div>
+            <div class="card-body">
+                <p class="card-text" th:text="${kategorie.name}"></p>
+            </div>
+        </div>
+        <div class="item card" onclick="favClick()">
+            <div class="crop">
+                <img class="card-img-top" src="https://i.paste.pics/34ce40e2f79c7a855484b49c19b88dbd.png?trs=256b1a53fda97129b0a96d9ca03bfb9be04b8511cead8dac1792897233737069" alt="Card image cap">
+            </div>
+            <div class="card-body">
+                <p class="card-text">Favoriten</p>
+            </div>
+        </div>
         <th:block th:each="kategorie: ${kategorieListe}">
-            <div class="item"  style="display: none" th:id="${artikel.id}" th:data-art="${artikel.id}" th:data-kat="${kategorie.id}" th:each="artikel: ${kategorie.artikel}" th:text="${artikel.name}" onclick="itemClick(this.id)"></div>
+            <div class="item card"  style="display: none" th:id="${artikel.id}" th:data-art="${artikel.id}" th:data-kat="${kategorie.id}" th:each="artikel: ${kategorie.artikel}" th:text="${artikel.name}" onclick="itemClick(this.id)">
+                <div class="crop">
+                    <img class="card-img-top" src="https://via.placeholder.com/640x480" alt="Card image cap">
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:text="${artikel.name}"></p>
+                </div>
+            </div>
         </th:block>
-        <div class="item favorit" th:each="artikel: ${favoriten}" th:id="${artikel.id + 'F'}" th:data-art="${artikel.id}" th:data-kat="${artikel.kategorie.id}" onclick="itemClick(this.id)" style="display: none" th:text="${artikel.name}"></div>
+        <div class="item favorit card" th:each="artikel: ${favoriten}" th:id="${artikel.id + 'F'}" th:data-art="${artikel.id}" th:data-kat="${artikel.kategorie.id}" onclick="itemClick(this.id)" style="display: none" th:text="${artikel.name}">
+            <div class="crop">
+                <img class="card-img-top" src="https://via.placeholder.com/640x480" alt="Card image cap">
+            </div>
+            <div class="card-body">
+                <p class="card-text" th:text="${artikel.name}"></p>
+            </div>
+        </div>
     </div>
 
 </body>
