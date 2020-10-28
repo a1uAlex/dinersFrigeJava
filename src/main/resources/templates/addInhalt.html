@@ -4,13 +4,33 @@
     <meta charset="UTF-8">
     <title>Kategorie hinzufügen</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+        input, select {
+            max-height: 150px;
+            min-width: 25%;
+            max-width: 50%;
+        }
+        button {
+            margin-top: 2%;
+            background: #4da0b0;
+            max-width: 50%;
+        }
         h1 {
             text-align: center;
             color: #4da0b0;
             alignment: center;
             font-size: 500%;
             text-shadow: 6px 2px lightgray;
+        }
+        .row {
+            display: flex;
+            margin-bottom: 1%;
+            flex-direction: row;
+            max-width: 50%;
+            min-width: 25%;
+            justify-content: space-between;
+
         }
         h2 {
             text-align: center;
@@ -28,11 +48,6 @@
         }
         body {
             background: #1F2525;
-        }
-        button {
-            margin-top: 2%;
-            background: #4da0b0;
-            max-width: 50%;
         }
         .itemBox {
             display: flex;
@@ -61,17 +76,34 @@
             height: 300px;
             margin: -75px 0 0 -100px;
         }
+        .box {
+            display: none;
+            flex-flow: column;
+            justify-content: space-between;
+            align-items: center;
+            alignment: center;
+            color: white;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
     <script>
+
         function itemClick(id) {
             div = document.getElementById(id);
-            kategorie = div.getAttribute('data-kat');
             artikel = div.getAttribute('data-art');
+            if(toString(artikel).includes('F')){
+                artikel = artikel.substring(0, artikel.length-2);
+            }
 
-
+            allItems = document.querySelectorAll('.item.card');
+            for(var i = 0; i<allItems.length; i++){
+                allItems[i].style.display = 'none';
+            }
+            document.querySelector('.box').style.display = 'flex';
+            document.getElementById('artikelId').value = artikel;
         }
 
         function katClick(id) {
@@ -79,6 +111,7 @@
             for(var j = 0; j<kategorien.length; j++){
                 kategorien[j].style.display = 'none';
             }
+
             css = '.item[data-kat="'+id+'"]';
             console.log(css);
             items = document.querySelectorAll(css);
@@ -100,43 +133,78 @@
     <h1>Diner's Fridge</h1>
     <h2>Inhalt hinzufügen</h2>
 
-    <h3 id="kategorien">Kategorien</h3>
     <div class="itemBox">
-        <div th:id="${kategorie.id}" th:each="kategorie: ${kategorieListe}" class="item kategorie card" onclick="katClick(this.id)">
-            <div class="crop">
-                <img class="card-img-top" src="https://via.placeholder.com/640x480" alt="Card image cap">
-            </div>
-            <div class="card-body">
-                <p class="card-text" th:text="${kategorie.name}"></p>
-            </div>
-        </div>
         <div class="item card" onclick="favClick()">
             <div class="crop">
-                <img class="card-img-top" src="https://i.paste.pics/34ce40e2f79c7a855484b49c19b88dbd.png?trs=256b1a53fda97129b0a96d9ca03bfb9be04b8511cead8dac1792897233737069" alt="Card image cap">
+                <img class="card-img-top" src="https://i.imgur.com/Z6j6CJy.png" alt="Card image cap">
             </div>
             <div class="card-body">
                 <p class="card-text">Favoriten</p>
             </div>
         </div>
+
+        <div th:id="${kategorie.id}" th:each="kategorie: ${kategorieListe}" class="item kategorie card" onclick="katClick(this.id)">
+            <div class="crop">
+                <img class="card-img-top" th:src="${kategorie.bild}" alt="Card image cap">
+            </div>
+            <div class="card-body">
+                <p class="card-text" th:text="${kategorie.name}"></p>
+            </div>
+        </div>
+
         <th:block th:each="kategorie: ${kategorieListe}">
-            <div class="item card"  style="display: none" th:id="${artikel.id}" th:data-art="${artikel.id}" th:data-kat="${kategorie.id}" th:each="artikel: ${kategorie.artikel}" th:text="${artikel.name}" onclick="itemClick(this.id)">
+            <div class="item card"  style="display: none" th:id="${artikel.id}" th:data-art="${artikel.id}" th:data-kat="${kategorie.id}" th:each="artikel: ${kategorie.artikel}" onclick="itemClick(this.id)">
                 <div class="crop">
-                    <img class="card-img-top" src="https://via.placeholder.com/640x480" alt="Card image cap">
+                    <img th:if="${artikel.bild.length() > 0}" class="card-img-top" th:src="${artikel.bild}" alt="Card image cap">
                 </div>
                 <div class="card-body">
                     <p class="card-text" th:text="${artikel.name}"></p>
                 </div>
             </div>
         </th:block>
-        <div class="item favorit card" th:each="artikel: ${favoriten}" th:id="${artikel.id + 'F'}" th:data-art="${artikel.id}" th:data-kat="${artikel.kategorie.id}" onclick="itemClick(this.id)" style="display: none" th:text="${artikel.name}">
+
+        <div class="item favorit card" th:each="artikel: ${favoriten}" th:id="${artikel.id + 'F'}" th:data-art="${artikel.id}" onclick="itemClick(this.id)" style="display: none">
             <div class="crop">
-                <img class="card-img-top" src="https://via.placeholder.com/640x480" alt="Card image cap">
+                <img th:if="${artikel.bild.length() > 0}" class="card-img-top" th:src="${artikel.bild}" alt="Card image cap">
             </div>
             <div class="card-body">
                 <p class="card-text" th:text="${artikel.name}"></p>
             </div>
         </div>
     </div>
+
+    <form action="/inhalt" method="post" id="form" th:object="${inhaltDTO}">
+        <div class="box">
+            <input type="number" placeholder="Menge" autofocus required min="1" th:field="*{menge}">
+
+            <div class="row">
+                <div>MHD: </div>
+                <input type="date" id="txtDate" th:field="*{mhd}">
+            </div>
+
+            <input id="artikelId" style="display: none" th:field="*{artikelId}">
+            <button class="btn btn-info" type="submit">Hinzufügen</button>
+        </div>
+
+    </form>
+
+    <script>
+        $(function(){
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() +1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+            var minDate = year + '-' + month + '-' + day;
+            $('#txtDate').attr('min', minDate);
+        });
+    </script>
 
 </body>
 </html>

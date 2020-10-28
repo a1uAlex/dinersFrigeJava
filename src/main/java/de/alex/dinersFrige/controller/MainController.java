@@ -3,6 +3,7 @@ package de.alex.dinersFrige.controller;
 import de.alex.dinersFrige.DTO.ArtikelDTO;
 import de.alex.dinersFrige.DTO.InhaltDTO;
 import de.alex.dinersFrige.converter.ArtikelConverter;
+import de.alex.dinersFrige.converter.InhaltConverter;
 import de.alex.dinersFrige.models.Artikel;
 import de.alex.dinersFrige.models.Inhalt;
 import de.alex.dinersFrige.models.Kategorie;
@@ -32,6 +33,9 @@ public class MainController {
 
     @Autowired
     ArtikelConverter artikelConverter;
+
+    @Autowired
+    InhaltConverter inhaltConverter;
 
     @GetMapping("/")
     public String mainPage(Model model){
@@ -121,6 +125,13 @@ public class MainController {
         System.err.println(kategorieList.get(0).getArtikel().size());
         return "addInhalt";
     }
+
+    @PostMapping("inhalt")
+    public String addInhalt(@ModelAttribute InhaltDTO inhaltDTO){
+        inhaltDAO.saveAndFlush(inhaltConverter.toInhalt(inhaltDTO));
+        return "redirect:/content";
+    }
+
 
 
 
