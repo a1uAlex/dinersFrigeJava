@@ -145,7 +145,7 @@
 
         <div th:id="${kategorie.id}" th:each="kategorie: ${kategorieListe}" class="item kategorie card" onclick="katClick(this.id)">
             <div class="crop">
-                <img class="card-img-top" th:src="${kategorie.bild}" alt="Card image cap">
+                <img th:if="${kategorie.bild.length() > 0}" class="card-img-top" th:src="${kategorie.bild}" alt="Card image cap">
             </div>
             <div class="card-body">
                 <p class="card-text" th:text="${kategorie.name}"></p>

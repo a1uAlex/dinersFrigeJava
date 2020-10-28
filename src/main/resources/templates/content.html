@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>What's in my Fridge?</title>
+    <script>
+        function updateInhalt(id) {
+            console.log("test");
+            menge = document.getElementById(id + 'V').value;
+            console.log(menge);
+            if (confirm("R u sure about that?" + menge)) {
+                $.ajax({
+                    url: '/inhalt/' + id,
+                    contentType: 'application/json',
+                    type: 'PUT',
+                    data: menge,
+                    success: function (result) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
     <style>
         h1 {
             text-align: center;
@@ -54,6 +73,7 @@
         <button class="btn btn-info" style="background: #4da0b0" onclick="location.href='/addInhalt'">Inhalt hinzufügen</button>
         <button class="btn btn-info" style="background: #4da0b0" onclick="location.href='/manageArticle'">Artikelverwaltung</button>
         <button class="btn btn-info" style="background: #4da0b0" onclick="location.href='/manageCategory'">Kategorienverwaltung</button>
+        <button class="btn btn-info" style="background: #4da0b0" onclick="location.href='/manageIgnored'">Ignorierte Zutaten</button>
     </div>
     <table class="table table-striped table-dark">
         <thead>
@@ -73,8 +93,8 @@
                 <td th:text="${inhalt.mhd}" />
                 <td>
                     <div>
-                        <input type="number" min="1">
-                        <button class="btn btn-warning">OK</button>
+                        <input th:attr="id=${inhalt.id}+'V'" type="number" min="1">
+                        <button th:attr="id=${inhalt.id}" class="btn btn-warning" onclick="updateInhalt(this.id)">OK</button>
                     </div>
                 </td>
             </tr>

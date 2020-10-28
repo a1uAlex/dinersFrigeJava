@@ -1,8 +1,11 @@
 package de.alex.dinersFrige.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -13,6 +16,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties
+@ToString
 @Entity
 public class Rezept {
 
@@ -27,6 +32,7 @@ public class Rezept {
     @OneToMany
     List <Zutat> zutaten;
 
+    @Column(length = 99999)
     String beschreibung;
 
     Integer vZeit;

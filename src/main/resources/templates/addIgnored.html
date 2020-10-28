@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zutat ignorieren</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        h1 {
+            text-align: center;
+            color: #4da0b0;
+            alignment: center;
+            font-size: 500%;
+            text-shadow: 6px 2px lightgray;
+        }
+        h2 {
+            text-align: center;
+            color: #4da0b0;
+            alignment: center;
+            font-size: 300%;
+            text-shadow: 4px 2px lightgray;
+        }
+        body {
+            background: #1F2525;
+        }
+        table {
+            color: #4da0b0;
+            alignment: center;
+        }
+        td {
+            text-align: center;
+        }
+        button {
+            margin-top: 2%;
+            background: #4da0b0;
+            max-width: 50%;
+        }
+        div {
+            display: flex;
+            flex-flow: column;
+            justify-content: space-between;
+            align-items: center;
+            alignment: center;
+        }
+        input {
+            margin-top: 2%;
+            max-height: 150px;
+            max-width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Diner's Fridge</h1>
+    <h2>Zu ignorierende Zutat hinzufügen</h2>
+
+    <form action="/ignored" method="post" th:object="${ignored}">
+        <div>
+            <input autofocus name="name" placeholder="Zutat" th:field="*{name}">
+            <button type="submit" class="btn btn-info">Hinzufügen</button>
+        </div>
+    </form>
+</body>
+</html>

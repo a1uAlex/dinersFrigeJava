@@ -5,18 +5,20 @@ import de.alex.dinersFrige.DTO.InhaltDTO;
 import de.alex.dinersFrige.converter.ArtikelConverter;
 import de.alex.dinersFrige.converter.InhaltConverter;
 import de.alex.dinersFrige.models.Artikel;
+import de.alex.dinersFrige.models.IgnoredArticle;
 import de.alex.dinersFrige.models.Inhalt;
 import de.alex.dinersFrige.models.Kategorie;
 import de.alex.dinersFrige.repository.ArtikelDAO;
+import de.alex.dinersFrige.repository.IgnoredArticleDAO;
 import de.alex.dinersFrige.repository.InhaltDAO;
 import de.alex.dinersFrige.repository.KategorieDAO;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -30,6 +32,9 @@ public class MainController {
 
     @Autowired
     ArtikelDAO artikelDAO;
+
+    @Autowired
+    IgnoredArticleDAO ignoredArticleDAO;
 
     @Autowired
     ArtikelConverter artikelConverter;
@@ -64,6 +69,13 @@ public class MainController {
         return "manageArticle";
     }
 
+    @GetMapping("manageIgnored")
+    public String manageIgnoredArticle(Model model){
+        List<IgnoredArticle> ignoredArticleList = ignoredArticleDAO.findAll();
+        model.addAttribute(ignoredArticleList);
+        return "ignored";
+    }
+
     @DeleteMapping("category/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable (value = "id") String id){
@@ -90,6 +102,19 @@ public class MainController {
         return;
     }
 
+    @DeleteMapping("ignoredArticle/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteIgnoredArticle(@PathVariable (value = "id") String id){
+        try{
+            Long longId = Long.valueOf(id);
+            ignoredArticleDAO.deleteById(longId);
+            ignoredArticleDAO.flush();
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return;
+    }
+
     @PostMapping("category")
     public String addCategory(@ModelAttribute Kategorie kategorie){
         kategorieDAO.saveAndFlush(kategorie);
@@ -102,10 +127,22 @@ public class MainController {
         return "redirect:/manageArticle";
     }
 
+    @PostMapping("ignored")
+    public String addArticle(@ModelAttribute IgnoredArticle ignoredArticle){
+        ignoredArticleDAO.saveAndFlush(ignoredArticle);
+        return "redirect:/manageIgnored";
+    }
+
     @GetMapping("addCategory")
     public String addCategoryPage(Model model){
         model.addAttribute("kategorie", new Kategorie());
         return "addCategory";
+    }
+
+    @GetMapping("addIgnored")
+    public String addIgnoredPage(Model model){
+        model.addAttribute("ignored", new IgnoredArticle());
+        return "addIgnored";
     }
 
     @GetMapping("addArticle")
@@ -131,6 +168,26 @@ public class MainController {
     public String addInhalt(@ModelAttribute InhaltDTO inhaltDTO){
         inhaltDAO.saveAndFlush(inhaltConverter.toInhalt(inhaltDTO));
         return "redirect:/content";
+    }
+
+    @PutMapping("inhalt/{id}")
+    @ResponseBody
+    public void updateInhalt(@PathVariable Long id, @RequestBody Long menge){
+        try{
+            Long longId = Long.valueOf(id);
+            Inhalt inhalt = inhaltDAO.findById(longId).orElseThrow(() -> new EntityNotFoundException());
+
+            if (menge.equals(inhalt.getMenge())){
+                inhaltDAO.deleteById(id);
+            } else if (menge < inhalt.getMenge()){
+                inhalt.setMenge(inhalt.getMenge()-menge);
+                inhaltDAO.saveAndFlush(inhalt);
+            }
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return;
+
     }
 
 

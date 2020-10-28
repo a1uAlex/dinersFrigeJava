@@ -6,15 +6,22 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
             function deleteArticle(id) {
-                if(confirm("Wirklich löschen?")){
-                    $.ajax({
-                        url: '/article/'+id,
-                        type: 'DELETE',
-                        success: function(result) {
-                            location.reload();
-                        }
-                    });
+
+                document.getElementById(id).getAttribute('anzahlInhalte')
+                if(document.getElementById(id).getAttribute('anzahlInhalte') > 0){
+                    alert("Artikel kann nicht gelöscht werden, da Inhalte vorhanden sind!");
+                } else {
+                    if(confirm("Wirklich löschen?")){
+                        $.ajax({
+                            url: '/article/'+id,
+                            type: 'DELETE',
+                            success: function(result) {
+                                location.reload();
+                            }
+                        });
+                    }
                 }
+
             }
         </script>
 <title>Kategorieverwaltung</title>
@@ -85,7 +92,7 @@
                 <td th:if="${artikel.isShortcut}">&#10004;</td>
                 <td th:unless="${artikel.isShortcut}">&#10060;</td>
                 <td>
-                    <button th:attr="id=${artikel.id}" class="btn btn-danger" onclick="deleteArticle(this.id)">Entfernen</button>
+                    <button th:anzahlInhalte="${artikel.inhalte.size()}" th:attr="id=${artikel.id}" class="btn btn-danger" onclick="deleteArticle(this.id)">Entfernen</button>
                 </td>
             </tr>
         </tbody>

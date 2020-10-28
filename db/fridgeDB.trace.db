@@ -1321,3 +1321,19 @@ Caused by: java.nio.channels.OverlappingFileLockException
 	at java.base/java.nio.channels.FileChannel.tryLock(FileChannel.java:1178)
 	at org.h2.mvstore.FileStore.open(FileStore.java:163)
 	... 29 more
+2020-10-28 15:37:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wert zu gross / lang für Feld "BESCHREIBUNG VARCHAR(255)": "STRINGDECODE('Die Bandnudeln sehr al dente kochen. Den Spinat in einem Topf mit ein wenig Wasser auftauen lassen, aber nicht koc... (833)"
+Value too long for column "BESCHREIBUNG VARCHAR(255)": "STRINGDECODE('Die Bandnudeln sehr al dente kochen. Den Spinat in einem Topf mit ein wenig Wasser auftauen lassen, aber nicht koc... (833)"; SQL statement:
+insert into rezept (beschreibung, bewertung, bild, ernaehrungsweise, ist_favorit, k_zeit, kategorie, titel, v_zeit, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-200]
+2020-10-28 15:57:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "SELECT * FROM ZUTAT REZEPT_KEYWORDS REZEPT_ZUTATEN[*]"
+Syntax error in SQL statement "SELECT * FROM ZUTAT REZEPT_KEYWORDS REZEPT_ZUTATEN[*]"; SQL statement:
+SELECT * FROM ZUTAT REZEPT_KEYWORDS REZEPT_ZUTATEN [42000-200]
+2020-10-28 16:16:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "COUNT[*] * FROM REZEPT_KEYWORDS"; erwartet "COMMIT, CREATE, CALL, CHECKPOINT, COMMENT"
+Syntax error in SQL statement "COUNT[*] * FROM REZEPT_KEYWORDS"; expected "COMMIT, CREATE, CALL, CHECKPOINT, COMMENT"; SQL statement:
+COUNT * FROM REZEPT_KEYWORDS [42001-200]
+2020-10-28 16:17:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "SELECT COUNT * FROM[*] REZEPT"
+Syntax error in SQL statement "SELECT COUNT * FROM[*] REZEPT"; SQL statement:
+SELECT COUNT * FROM REZEPT [42000-200]

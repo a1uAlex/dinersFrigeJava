@@ -1,8 +1,6 @@
 package de.alex.dinersFrige.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -11,14 +9,18 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 public class Zutat {
+
+    public Zutat(String zutat){
+        this.zutat = zutat;
+    }
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Long id;
 
-    String name;
-
-    Double menge;
+    String zutat;
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,5 +29,8 @@ public class Artikel {
     String einheit;
 
     Boolean isShortcut;
+
+    @OneToMany(mappedBy = "artikel")
+    List<Inhalt> inhalte;
 
 }

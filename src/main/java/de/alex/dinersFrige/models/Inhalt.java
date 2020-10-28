@@ -20,11 +20,12 @@ public class Inhalt {
     Long id;
 
     @ManyToOne
+    @JoinColumn(name="artikel_fk")
     Artikel artikel;
 
     Date mhd;
 
-    Double menge;
+    Long menge;
 
 
 }

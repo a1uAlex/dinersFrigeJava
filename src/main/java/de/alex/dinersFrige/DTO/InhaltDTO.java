@@ -20,5 +20,5 @@ public class InhaltDTO {
 
     String mhd;
 
-    Double menge;  //TODO gegebenenfalls zu Integer ändern
+    Long menge;
 }
