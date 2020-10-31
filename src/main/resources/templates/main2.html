@@ -16,24 +16,34 @@
                 justify-content: space-between;
                 height: 80%;
                 }
-            img {
+            .img {
                 display: block;
-                width: 60%;
-                height: 200px;
+                max-width: 60%;
+                max-height: 150px;
                 margin-top: 5%;
                 }
+            .logo {
+                max-height: 100px;
+                max-width: 50%;
+                min-width: 25%;
+                margin-left: 25%;
+                margin-right: 25%;
+
+            }
         </style>
     </head>
     <body>
         <center>
             <main>
-                <img class="box" src="../static/pictures/logo.svg" > </img>
+               <div class="box" class="logo"><img src="../static/pictures/logo.svg"></img></div>
             </main>
         <div class="box">
-            <img src="../static/pictures/button1.svg" onclick="location.href='/content'"> </img>
-            <img src="../static/pictures/button2.svg" onclick="location.href='/addInhalt'"> </img>
-            <img src="../static/pictures/button3.svg"> </img>
-        </center>
+            <img class="img" src="../static/pictures/button1.svg" onclick="location.href='/content'"> </img>
+            <img class="img" src="../static/pictures/button2.svg" onclick="location.href='/addInhalt'"> </img>
+            <img class="img" src="../static/pictures/button3.svg" onclick="location.href='/dinner'"> </img>
         </div>
+        </center>
     </body>
 </html>
+
+<!-- TODO: Border um einzelne Bilder, Größen anpassen -->
